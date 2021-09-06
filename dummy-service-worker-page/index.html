@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Dummy service worker</h1>
+        <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./dummy-service-worker.js')
+                    .then(function() {
+                        return navigator.serviceWorker.ready;
+                    })
+                    .then(function() {
+                        navigator.serviceWorker.controller.postMessage('test');
+                    })
+                    .catch(e => {
+                        console.log('Dummy service worker register failed', e);
+                        window.parent.postMessage('service-worker-register-fail', '*')
+                    });
+            }
+        </script>
+    </body>
+</html>
